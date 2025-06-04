@@ -10,4 +10,8 @@ build_website:
     - ls -la
     - npm ci
     - npm run build
+    - cd build
     - ls -la
+  articfacts:
+    paths:
+    - build/
