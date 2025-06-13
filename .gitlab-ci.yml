@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - unit
 
 build_website:
   image: node:22-alpine
@@ -22,3 +23,10 @@ test_website:
   stage: test
   script:
     - test -f build/index.html
+
+unit_tests:
+  image: node:22-alpine
+  stage: unit
+  script:
+    - npm ci
+    - npm test
