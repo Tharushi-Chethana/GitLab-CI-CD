@@ -17,7 +17,7 @@ build_website:
     paths:
     - build/
 
-test_website:
+test_artifact:
   image: alpine
   stage: test
   script:
@@ -29,3 +29,7 @@ unit_tests:
   script:
     - npm ci
     - npm test
+  artifacts:  #publish the junit report
+    when: always #always publish the report (when it fail or when it pass)
+    reports:
+      junit: ./reports/junit.xml,
