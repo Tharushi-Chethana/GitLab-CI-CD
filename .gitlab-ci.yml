@@ -32,4 +32,4 @@ unit_tests:
   artifacts:  #publish the junit report
     when: always #always publish the report (when it fail or when it pass)
     reports:
-      junit: ./reports/junit.xml,
+      junit: ./reports/junit.xml
