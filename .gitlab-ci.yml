@@ -38,7 +38,7 @@ eslint:
   image: node:22-alpine
   script:
     - npm ci
-    - npx run lint
+    - npm run lint
   artifacts:
     reports:
       codequality: gl-codequality.json
