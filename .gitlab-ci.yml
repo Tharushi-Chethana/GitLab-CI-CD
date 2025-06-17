@@ -33,3 +33,12 @@ unit_tests:
     when: always #always publish the report (when it fail or when it pass)
     reports:
       junit: ./reports/junit.xml
+
+eslint:
+  image: node:22-alpine
+  script:
+    - npm ci
+    - npm run lint
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
