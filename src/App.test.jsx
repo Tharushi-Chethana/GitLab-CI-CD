@@ -4,6 +4,7 @@ import App from './App'
 
 describe('an always true assertion', () => {
   it('should be equal to 2', () => {
+    let foo;
     expect(1+1).toEqual(2)
   })
 })
