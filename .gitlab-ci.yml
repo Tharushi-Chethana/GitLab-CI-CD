@@ -33,3 +33,10 @@ unit_tests:
     when: always #always publish the report (when it fail or when it pass)
     reports:
       junit: ./reports/junit.xml
+
+netlify:
+  image: node:22-alpine
+  stage: .pre
+  script:
+    - npm install -g netlify-cli
+    - netlify --version
