@@ -60,6 +60,7 @@ netlify_staging:
 netlify_prod:
   image: node:22-alpine
   stage: deploy_prod
+  when: manual
   rules:
     - if : $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
     #CI_COMMIT_REF_NAME: The branch or tag name for which project is built.
