@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 build_website:
   image: node:22-alpine
@@ -8,11 +9,8 @@ build_website:
   script:
     - node --version
     - npm --version
-    - ls -la
     - npm ci
     - npm run build
-    - cd build
-    - ls -la
   artifacts:
     paths:
     - build/
@@ -36,7 +34,22 @@ unit_tests:
 
 netlify:
   image: node:22-alpine
-  stage: .pre
+  stage: deploy
+  rules:
+    - if : $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    #CI_COMMIT_REF_NAME: The branch or tag name for which project is built.
+    #CI_DEFAULT_BRANCH: The name of the project’s default branch.
+  variables:
+    NETLIFY_SITE_ID: 'd31b585b-8d1d-4897-bf12-d1d9eeaa421f'
   script:
     - npm install -g netlify-cli
     - netlify --version
+    - netlify status
+    - echo "Depolying to project id $NETLIFY_SITE_ID"
+    - netlify deploy --prod --dir=build --no-build
+    - apk add curl # apk which stands for alpine package manager 
+    # we use apk of the alpine linux distribution to install curl
+    - curl 'https://tharushi-learn-gitlab.netlify.app' | grep 'GitLab'
+    # curl use to check the website.
+    # | (pipe chatacter) use to send the result of actually getting the contents of 
+    # this website to the grep command, which has the ability of the searching the text
