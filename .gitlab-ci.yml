@@ -52,12 +52,16 @@ netlify_review:
     #CI_DEFAULT_BRANCH: The name of the project’s default branch.  
   before_script:
     - npm install -g netlify-cli
-    - apk add curl # apk which stands for alpine package manager 
+    - apk add curl jq # apk which stands for alpine package manager and install curl and jq
   script:
     - netlify --version
     - netlify status
     - echo "Depolying to project id $NETLIFY_SITE_ID"
-    - netlify deploy --dir=build --no-build
+    - netlify deploy --dir=build --no-build --json | tee deploy-result.json
+    #- cat deploy-result.json
+    #- jq -r '.deploy_url' deploy-result.json # get the url value using jq
+    - REVIEW_URL=$(jq -r '.deploy_url' deploy-result.json) #Get the url value and store this into the REVIEW_URL variable
+    - curl $REVIEW_URL | grep 'GitLab'
 
 netlify_staging:
   image: node:22-alpine
