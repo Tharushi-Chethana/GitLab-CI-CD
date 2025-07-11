@@ -1,3 +1,9 @@
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Control when merge request pipelines run.
+    - if : $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    
 variables:
   NETLIFY_SITE_ID: 'd31b585b-8d1d-4897-bf12-d1d9eeaa421f'
 
@@ -40,6 +46,10 @@ unit_tests:
 netlify_review:
   image: node:22-alpine
   stage: deploy_review
+  rules:
+    - if : $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
+    #CI_COMMIT_REF_NAME: The branch or tag name for which project is built.
+    #CI_DEFAULT_BRANCH: The name of the project’s default branch.  
   before_script:
     - npm install -g netlify-cli
     - apk add curl # apk which stands for alpine package manager 
