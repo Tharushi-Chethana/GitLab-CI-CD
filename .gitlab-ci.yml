@@ -3,7 +3,7 @@ workflow:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Control when merge request pipelines run.
     - if : $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-    
+
 variables:
   NETLIFY_SITE_ID: 'd31b585b-8d1d-4897-bf12-d1d9eeaa421f'
 
@@ -49,7 +49,10 @@ netlify_review:
   rules:
     - if : $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
     #CI_COMMIT_REF_NAME: The branch or tag name for which project is built.
-    #CI_DEFAULT_BRANCH: The name of the project’s default branch.  
+    #CI_DEFAULT_BRANCH: The name of the project’s default branch.
+  environment:
+    name: preview/$CI_COMMIT_REF_SLUG
+    url: $PREVIEW_URL
   before_script:
     - npm install -g netlify-cli
     - apk add curl jq # apk which stands for alpine package manager and install curl and jq
@@ -61,7 +64,13 @@ netlify_review:
     #- cat deploy-result.json
     #- jq -r '.deploy_url' deploy-result.json # get the url value using jq
     - REVIEW_URL=$(jq -r '.deploy_url' deploy-result.json) #Get the url value and store this into the REVIEW_URL variable
+    - echo $REVIEW_URL
     - curl $REVIEW_URL | grep 'GitLab'
+    - echo "REVIEW_URL=$REVIEW_URL" > deploy.env
+    - cat deploy.env
+  artifacts:
+    reports:
+      dotenv: deploy.env
 
 netlify_staging:
   image: node:22-alpine
