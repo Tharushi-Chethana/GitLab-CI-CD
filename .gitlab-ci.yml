@@ -52,6 +52,7 @@ netlify_review:
     #CI_DEFAULT_BRANCH: The name of the project’s default branch.
   environment:
     name: preview/$CI_COMMIT_REF_SLUG
+    # CI_COMMIT_REF_NAME in lowercase, shortened to 63 bytes, and with everything except 0-9 and a-z replaced with -. No leading / trailing -. Use in URLs, host names and domain names.
     url: $PREVIEW_URL
   before_script:
     - npm install -g netlify-cli
@@ -79,6 +80,9 @@ netlify_staging:
     - if : $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
     #CI_COMMIT_REF_NAME: The branch or tag name for which project is built.
     #CI_DEFAULT_BRANCH: The name of the project’s default branch.
+  environment:
+    name: staging
+    url: 'https://staging--tharushi-learn-gitlab.netlify.app'
   before_script:
     - npm install -g netlify-cli
     - apk add curl # apk which stands for alpine package manager 
@@ -88,7 +92,8 @@ netlify_staging:
     - echo "Depolying to project id $NETLIFY_SITE_ID"
     - netlify deploy --alias staging --dir=build --no-build
     # we use apk of the alpine linux distribution to install curl
-    - curl 'https://staging--tharushi-learn-gitlab.netlify.app' | grep 'GitLab'
+    - echo $CI_ENVIRONMENT_URL
+    - curl $CI_ENVIRONMENT_URL | grep 'GitLab'
     # curl use to check the website.
     # | (pipe chatacter) use to send the result of actually getting the contents of 
     # this website to the grep command, which has the ability of the searching the text
@@ -100,6 +105,7 @@ netlify_prod:
     - if : $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
     #CI_COMMIT_REF_NAME: The branch or tag name for which project is built.
     #CI_DEFAULT_BRANCH: The name of the project’s default branch.
+  environment: production
   before_script:
     - npm install -g netlify-cli
     - apk add curl # apk which stands for alpine package manager 
@@ -109,7 +115,7 @@ netlify_prod:
     - echo "Depolying to project id $NETLIFY_SITE_ID"
     - netlify deploy --prod --dir=build --no-build
     # we use apk of the alpine linux distribution to install curl
-    - curl 'https://tharushi-learn-gitlab.netlify.app' | grep 'GitLab'
+    - curl $CI_ENVIRONMENT_URL | grep 'GitLab'
     # curl use to check the website.
     # | (pipe chatacter) use to send the result of actually getting the contents of 
     # this website to the grep command, which has the ability of the searching the text
