@@ -9,7 +9,7 @@ stages:
 test_docker:
   stage: .pre
   image: docker
-  scipt:
+  script:
    - docker --version
    - docker version
 
