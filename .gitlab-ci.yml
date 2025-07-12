@@ -10,7 +10,7 @@ test_docker:
   stage: .pre
   image: docker
   services:
-    - docker: dind
+    - docker:dind
   script:
    - docker --version
    - docker version
