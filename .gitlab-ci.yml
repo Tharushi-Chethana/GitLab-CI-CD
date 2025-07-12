@@ -9,6 +9,8 @@ stages:
 test_docker:
   stage: .pre
   image: docker
+  services:
+    - docker: dind
   script:
    - docker --version
    - docker version
