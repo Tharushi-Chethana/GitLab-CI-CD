@@ -73,6 +73,15 @@ netlify_review:
     reports:
       dotenv: deploy.env
 
+e2e:
+  stage: .pre
+  image: mcr.microsoft.com/playwright:v1.49.0-noble
+  variables: 
+    APP_BASE_URL: 'https://tharushi-learn-gitlab.netlify.app/'
+  script:
+    - npm ci #install all dependencies
+    - npm run e2e
+
 netlify_staging:
   image: node:22-alpine
   stage: deploy_staging
