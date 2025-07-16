@@ -13,17 +13,19 @@ build_docker_netlify:
     - docker:27-dind
   script:
    - docker version
-   #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD registry $CI_REGISTRY
+   #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
    # $CI_REGISTRY: Address of the container registry server, formatted as <host>[:<port>]. Only available if the container registry is enabled for the GitLab instance.\
    # $CI_REGISTRY_USER: The username to push containers to the project’s GitLab container registry. Only available if the container registry is enabled for the project.
    # $CI_REGISTRY_PASSWORD:	The password to push containers to the GitLab project’s container registry. Only available if the container registry is enabled for the project. This password value is the same as the CI_JOB_TOKEN and is valid only as long as the job is running. Use the CI_DEPLOY_PASSWORD for long-lived access to the registry
    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
    # send "echo $$CI_REGISTRY_PASSWORD" this value as the input
    # -password-stdin: read the password using standard input
-   - docker build -t netlify -f ci/Dockerfile .
+   - docker build -t $CI_REGISTRY_IMAGE/netlify -f ci/Dockerfile .
+   # $CI_REGISTRY_IMAGE: Base address for the container registry to push, pull, or tag project’s images, formatted as <host>[:<port>]/<project_full_path>. 
    #  dot(.) itself in a command refres to current directory
    # -t netlify = give name and tag
    - docker image ls
+   - docker push $CI_REGISTRY_IMAGE/netlify #push docker image (docker image: $CI_REGISTRY_IMAGE/netlify)
 
 build_website:
   image: node:22-alpine
