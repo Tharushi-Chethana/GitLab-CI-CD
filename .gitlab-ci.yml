@@ -20,12 +20,12 @@ build_docker_netlify:
    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
    # send "echo $$CI_REGISTRY_PASSWORD" this value as the input
    # -password-stdin: read the password using standard input
-   - docker build -t $CI_REGISTRY_IMAGE/netlify -f ci/Dockerfile .
+   - docker build -t $CI_REGISTRY_IMAGE/netlify:18.0.0 -f ci/Dockerfile .
    # $CI_REGISTRY_IMAGE: Base address for the container registry to push, pull, or tag project’s images, formatted as <host>[:<port>]/<project_full_path>. 
    #  dot(.) itself in a command refres to current directory
    # -t netlify = give name and tag
    - docker image ls
-   - docker push $CI_REGISTRY_IMAGE/netlify #push docker image (docker image: $CI_REGISTRY_IMAGE/netlify)
+   - docker push $CI_REGISTRY_IMAGE/netlify:18.0.0 #push docker image (docker image: $CI_REGISTRY_IMAGE/netlify)
 
 build_website:
   image: node:22-alpine
