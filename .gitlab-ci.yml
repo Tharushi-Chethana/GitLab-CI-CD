@@ -20,4 +20,5 @@ aws-s3:
   entrypoint: [""]
  script:
    - aws --version
-   - aws s3 ls
+   - echo "<h1>Hello S3!</h1>" > index.html
+   - aws s3 cp index.html s3://learn-gitlab-202507171146/index.html
