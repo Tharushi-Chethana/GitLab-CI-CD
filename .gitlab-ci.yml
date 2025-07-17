@@ -15,6 +15,6 @@ build_website:
 
 aws-s3:
  stage: .pre
- images: amazon/aws-cli
+ image: amazon/aws-cli
  script:
    - aws --version
