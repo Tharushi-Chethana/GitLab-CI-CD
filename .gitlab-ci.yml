@@ -38,4 +38,4 @@ ssh_deploy:
     - chmod 644 ~/.ssh/known_hosts
     # Open SSH connection
     #  Old Code: - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
-    - ssh ec2-user@$REMOTE_DEPLOY_HOST
+    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST
