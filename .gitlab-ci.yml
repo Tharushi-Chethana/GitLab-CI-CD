@@ -22,3 +22,9 @@ ssh_deploy:
     - nc -zv $REMOTE_DEPLOY_HOST 22
     - echo $SSH_PRIVATE_KEY
     - cat $SSH_PRIVATE_KEY
+    # check current permission
+    - ls -l $SSH_PRIVATE_KEY 
+    # change mode to grand read-only permission to owner
+    # 400: read only permission
+    - chmod 400 $SSH_PRIVATE_KEY
+    - ls -l $SSH_PRIVATE_KEY 
