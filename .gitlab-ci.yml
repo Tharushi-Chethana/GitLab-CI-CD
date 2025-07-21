@@ -24,8 +24,18 @@ ssh_deploy:
     # 400: read only permission
     - chmod 400 $SSH_PRIVATE_KEY
     - ls -l $SSH_PRIVATE_KEY 
+    # Install openssh-client
     - apk add openssh-client
     #- ssh-agent # it is background process that manage SSH keys for authentication. we need thisSSH -Agent to add our key
     - eval $(ssh-agent) #To set these enviornments variables in curent shell sessions
+    # Add the SSH key to the agent
     - ssh-add $SSH_PRIVATE_KEY
-    - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
+    # Create the SSH directory and assign the right permission
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    # Create the known_hosts file and assign the right permission
+    - cp $SSH_KNOWN_HOSTS ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # Open SSH connection
+    #  Old Code: - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
+    - ssh @$REMOTE_DEPLOY_HOST 
