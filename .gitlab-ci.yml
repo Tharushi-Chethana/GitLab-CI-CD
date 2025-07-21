@@ -20,11 +20,12 @@ ssh_deploy:
     #check if port 22 is open on the server
     #- nc -zv 54.235.10.186 22
     - nc -zv $REMOTE_DEPLOY_HOST 22
-    - echo $SSH_PRIVATE_KEY
-    - cat $SSH_PRIVATE_KEY
-    # check current permission
-    - ls -l $SSH_PRIVATE_KEY 
     # change mode to grand read-only permission to owner
     # 400: read only permission
     - chmod 400 $SSH_PRIVATE_KEY
     - ls -l $SSH_PRIVATE_KEY 
+    - apk add openssh-client
+    #- ssh-agent # it is background process that manage SSH keys for authentication. we need thisSSH -Agent to add our key
+    - eval (ssh-agent) #To set these enviornments variables in curent shell sessions
+    - ssh-add $SSH_PRIVATE_KEY
+    - ssh ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
