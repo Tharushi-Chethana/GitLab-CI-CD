@@ -26,6 +26,6 @@ ssh_deploy:
     - ls -l $SSH_PRIVATE_KEY 
     - apk add openssh-client
     #- ssh-agent # it is background process that manage SSH keys for authentication. we need thisSSH -Agent to add our key
-    - eval (ssh-agent) #To set these enviornments variables in curent shell sessions
+    - eval $(ssh-agent) #To set these enviornments variables in curent shell sessions
     - ssh-add $SSH_PRIVATE_KEY
     - ssh ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
