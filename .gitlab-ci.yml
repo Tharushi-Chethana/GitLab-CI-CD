@@ -20,3 +20,5 @@ ssh_deploy:
     #check if port 22 is open on the server
     #- nc -zv 54.235.10.186 22
     - nc -zv $REMOTE_DEPLOY_HOST 22
+    - echo $SSH_PRIVATE_KEY
+    - cat $SSH_PRIVATE_KEY
