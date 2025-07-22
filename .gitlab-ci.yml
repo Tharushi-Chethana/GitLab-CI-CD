@@ -24,8 +24,8 @@ ssh_deploy:
     # 400: read only permission
     - chmod 400 $SSH_PRIVATE_KEY
     - ls -l $SSH_PRIVATE_KEY 
-    # Install openssh-client and rsync
-    - apk add openssh-client rsync
+    # Install openssh-client, rsync and zip
+    - apk add openssh-client rsync zip
     #- ssh-agent # it is background process that manage SSH keys for authentication. we need thisSSH -Agent to add our key
     - eval $(ssh-agent) #To set these enviornments variables in curent shell sessions
     # Add the SSH key to the agent
