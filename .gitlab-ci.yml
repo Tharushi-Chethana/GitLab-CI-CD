@@ -39,5 +39,14 @@ ssh_deploy:
   script:
     # Open SSH connection + run the commands
     #  Old Code: - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
-    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "whoami; touch /tmp/foo.txt; ls -l /tmp" # We can run multiple commands: whoami; touch /tmp/foo.txt; ls -l /tmp
-    - rsync -rvz --delete build/ $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:/usr/share/nginx/html/ # Securely trasfer file (transfer all content of build directory. not build directory itself)
+    #- rsync -rvz --delete build/ $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:/usr/share/nginx/html/ # Securely trasfer file (transfer all content of build directory. not build directory itself)
+    # -r : copy files and directories recursively
+    # -v : show progress (verbose output)
+    # -z : compress files during transfer (faster over network)
+    # --delete : delete files in the destination that no longer exist in the source
+    # build/ : source folder (with trailing slash = send contents only, not the folder itself)
+    # $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST : SSH access to remote server
+    # /usr/share/nginx/html/ : destination folder on the remote server
+    - zip -r build.zip build/
+    - scp build.zip ci\deploy.sh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:~/deploy
+    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "cd ~/deploy; chmod +x deploy.sh; ./deploy.sh" # We can run multiple commands: whoami; touch /tmp/foo.txt; ls -l /tmp
