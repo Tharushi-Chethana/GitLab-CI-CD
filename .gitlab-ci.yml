@@ -16,7 +16,7 @@ build_website:
 ssh_deploy:
   stage: .pre
   image: alpine
-  script:
+  before_script:
     #check if port 22 is open on the server
     #- nc -zv 54.235.10.186 22
     - nc -zv $REMOTE_DEPLOY_HOST 22
@@ -36,6 +36,7 @@ ssh_deploy:
     # Create the known_hosts file and assign the right permission
     - cp $SSH_KNOWN_HOSTS ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    # Open SSH connection
+  script:
+    # Open SSH connection + run the commands
     #  Old Code: - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
-    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST
+    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "whoami"
