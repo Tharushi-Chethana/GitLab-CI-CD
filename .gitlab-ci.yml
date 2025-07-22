@@ -14,7 +14,7 @@ build_website:
       - build/
 
 ssh_deploy:
-  stage: .pre
+  stage: deploy
   image: alpine
   before_script:
     #check if port 22 is open on the server
@@ -38,9 +38,6 @@ ssh_deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     # Open SSH connection + run the commands
-    - touch bar.txt
-    # Securely trasfer file 
-    - scp bar.txt $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:/tmp
     #  Old Code: - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
-    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "whoami; touch /tmp/foo.txt; ls -l /tmp"
-    # We can run multiple commands: whoami; touch /tmp/foo.txt; ls -l /tmp
+    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "whoami; touch /tmp/foo.txt; ls -l /tmp" # We can run multiple commands: whoami; touch /tmp/foo.txt; ls -l /tmp
+    - scp build/* $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:user/share/nginx/html/ # Securely trasfer file (transfer all content of build directory. not build directory itself)
