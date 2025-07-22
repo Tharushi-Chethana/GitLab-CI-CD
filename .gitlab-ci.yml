@@ -48,5 +48,5 @@ ssh_deploy:
     # $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST : SSH access to remote server
     # /usr/share/nginx/html/ : destination folder on the remote server
     - zip -r build.zip build/
-    - scp build.zip ci\deploy.sh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:~/deploy
+    - scp build.zip ci/deploy.sh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:~/deploy
     - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "cd ~/deploy; chmod +x deploy.sh; ./deploy.sh" # We can run multiple commands: whoami; touch /tmp/foo.txt; ls -l /tmp
