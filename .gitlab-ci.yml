@@ -20,4 +20,7 @@ ecs_deploy:
     entrypoint: [""]
   script:
     - aws --version
+    # update the task definition
     - aws ecs register-task-definition --cli-input-json file://aws/td-prod.json
+    # update the service
+    - aws ecs update-service --cluster LearnGitLabApp-Cluster-Tharushi --service LearnGitLabApp-TD-Prod --task-definition LearnGitLabApp-TD-Prod
