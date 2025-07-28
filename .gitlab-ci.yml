@@ -13,40 +13,11 @@ build_website:
     paths: 
       - build/
 
-ssh_deploy:
-  stage: deploy
-  image: alpine
-  before_script:
-    #check if port 22 is open on the server
-    #- nc -zv 54.235.10.186 22
-    - nc -zv $REMOTE_DEPLOY_HOST 22
-    # change mode to grand read-only permission to owner
-    # 400: read only permission
-    - chmod 400 $SSH_PRIVATE_KEY
-    - ls -l $SSH_PRIVATE_KEY 
-    # Install openssh-client, rsync and zip
-    - apk add openssh-client rsync zip
-    #- ssh-agent # it is background process that manage SSH keys for authentication. we need thisSSH -Agent to add our key
-    - eval $(ssh-agent) #To set these enviornments variables in curent shell sessions
-    # Add the SSH key to the agent
-    - ssh-add $SSH_PRIVATE_KEY
-    # Create the SSH directory and assign the right permission
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    # Create the known_hosts file and assign the right permission
-    - cp $SSH_KNOWN_HOSTS ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
+ecs_deploy:
+  stage: .pre
+  image: 
+    name: amazon/aws-cli:2.23.0
+    entrypoint: [""]
   script:
-    # Open SSH connection + run the commands
-    #  Old Code: - ssh -o StrictHostKeyChecking=no ec2-user@$REMOTE_DEPLOY_HOST # Should check to see if can establish an SSH connection to this remote server
-    #- rsync -rvz --delete build/ $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:/usr/share/nginx/html/ # Securely trasfer file (transfer all content of build directory. not build directory itself)
-    # -r : copy files and directories recursively
-    # -v : show progress (verbose output)
-    # -z : compress files during transfer (faster over network)
-    # --delete : delete files in the destination that no longer exist in the source
-    # build/ : source folder (with trailing slash = send contents only, not the folder itself)
-    # $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST : SSH access to remote server
-    # /usr/share/nginx/html/ : destination folder on the remote server
-    - zip -r build.zip build/
-    - scp build.zip ci/deploy.sh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST:~/deploy
-    - ssh $REMOTE_DEPLOY_USER@$REMOTE_DEPLOY_HOST "cd ~/deploy; chmod +x deploy.sh; ./deploy.sh" # We can run multiple commands: whoami; touch /tmp/foo.txt; ls -l /tmp
+    - aws --version
+    - aws ecs register-task-definition --cli-input-json file://aws/td-prod.json
