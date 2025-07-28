@@ -34,7 +34,7 @@ build_docker_image:
     - aws --version
     - docker version
     # build docker image
-    - docker build -t $DOCKER_REGISTRY/:$VITE_APP_VERSION .
+    - docker build -t $DOCKER_REGISTRY/learngitlabapp:$VITE_APP_VERSION .
     # use aws ecr to get the login password and passing this to docker login
     - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
     # push docker image 
