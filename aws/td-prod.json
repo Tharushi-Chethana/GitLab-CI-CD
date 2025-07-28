@@ -6,7 +6,7 @@
     "containerDefinitions": [
         {
             "name": "learngitlabapp",
-            "image": "nginx:1.27.3-alpine",
+            "image": "903183826114.dkr.ecr.us-east-1.amazonaws.com/learngitlabapp",
             "portMappings": [{
                 "name": "ngnix-80-tcp",
                 "containerPort": 80,
@@ -21,5 +21,5 @@
     "networkMode": "awsvpc",
     "memory": "512",
     "cpu": "256",
-    "executionRoleArn": ""
+    "executionRoleArn": "arn:aws:iam::903183826114:role/ecsTaskExecutionRole"
 }
