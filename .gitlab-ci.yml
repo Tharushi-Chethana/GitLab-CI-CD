@@ -1,30 +1,36 @@
-.dependencies: &dependencies
-  - echo "Installing dependencies" 
-  
-.job_template: &my_job_template
+stages:
+  - build
+  - deploy_staging
+  - deploy_prod
+
+build_file:
   image: alpine
-  before_script:
-    - echo "Installing dependencies"
-
-job_1_new:
-  <<: *my_job_template
+  stage: build
   script:
-    - echo "Job 1"
+    - echo "Hello" > build.txt
+  artifacts:
+    paths:
+      - build.txt
 
-job_2_new:
-  <<: *my_job_template
-  script:
-    - echo "Job 2"
-
-job_1:
+mock_deploy_staging:
   image: alpine
-  before_script: *dependencies
+  stage: deploy_staging
+  environment:
+    name: staging
+  variables:
+    APP_VERSION: $CI_PIPELINE_IID
+    DB_NAME: "staging-db"
   script:
-    - echo "Job 1"
+    - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
 
-job_2:
+mock_deploy_prod:
   image: alpine
-  before_script:
-    - echo "Installing dependencies"
+  stage: deploy_prod
+  environment:
+    name: production
+  variables:
+    APP_VERSION: $CI_PIPELINE_IID
+    DB_NAME: "prod-db"
   script:
-    - echo "Job 2"
+    - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
+    - echo "This should run ONLY on prod."
