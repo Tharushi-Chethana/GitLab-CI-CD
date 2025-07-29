@@ -1,3 +1,6 @@
+.dependencies: &dependencies
+  - echo "Installing dependencies" 
+  
 .job_template: &my_job_template
   image: alpine
   before_script:
@@ -15,8 +18,7 @@ job_2_new:
 
 job_1:
   image: alpine
-  before_script:
-    - echo "Installing dependencies"
+  before_script: *dependencies
   script:
     - echo "Job 1"
 
