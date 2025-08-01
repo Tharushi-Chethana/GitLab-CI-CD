@@ -12,6 +12,27 @@ build_file:
     paths:
       - build.txt
 
+.deploy_template: &deploy_template
+  image: alpine
+  stage: deploy_staging
+  environment:
+    name: staging
+  variables: &deploy_variable
+    APP_VERSION: $CI_PIPELINE_IID
+    DB_NAME: "staging-db"
+  script:
+    - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
+    - if [[ "$CI_ENVIRONMENT_NAME" == "production" ]]; then echo "This should run ONLY on prod."; fi
+
+mock_deploy_prod_new:
+  <<: *deploy_template
+  stage: deploy_prod
+  environment:
+    name: production
+  variables:
+    <<: *deploy_variable
+    DB_NAME: "prod-db"
+
 mock_deploy_staging:
   image: alpine
   stage: deploy_staging
