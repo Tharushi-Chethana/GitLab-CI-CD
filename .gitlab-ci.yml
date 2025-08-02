@@ -3,7 +3,7 @@ stages:
   - deploy_staging
   - deploy_prod
 
-include: 'ci\build.yml'
+include: 'ci/build.yml'
 
 .deploy_script:
   script:
