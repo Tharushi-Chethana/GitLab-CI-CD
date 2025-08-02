@@ -10,7 +10,6 @@ include:
 mock_deploy_staging_new:
   extends: 
     - .deploy_template
-    - .deploy_script
   stage: deploy_staging
   environment:
     name: staging
