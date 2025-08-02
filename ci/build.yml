@@ -1,0 +1,8 @@
+build_file:
+  image: alpine
+  stage: build
+  script:
+    - echo "Hello" > build.txt
+  artifacts:
+    paths:
+      - build.txt
