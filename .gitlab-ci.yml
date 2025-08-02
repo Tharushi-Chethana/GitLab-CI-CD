@@ -39,3 +39,4 @@ mock_deploy_prod:
   script:
     - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
     - echo "This should run ONLY on prod."
+    
