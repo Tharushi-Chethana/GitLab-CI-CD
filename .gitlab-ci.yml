@@ -3,21 +3,9 @@ stages:
   - deploy_staging
   - deploy_prod
 
-include: 'ci/build.yml'
-
-.deploy_script:
-  script:
-    - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
-    - echo "This should run ONLY on prod."
-
-.deploy_template:
-  image: alpine
-  stage: deploy_prod
-  environment:
-    name: production
-  variables:
-    APP_VERSION: $CI_PIPELINE_IID
-    DB_NAME: "prod-db"
+include: 
+- local: 'ci/build.yml'
+- remote: 'https://gitlab.com/tharushi-projects/gitlab-templated/-/blob/main/.deploy_template.yml'
 
 mock_deploy_staging_new:
   extends: 
