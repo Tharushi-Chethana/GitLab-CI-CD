@@ -1,22 +1,10 @@
-build_website:
-  stage: build
-  image: alpine
-  script:
-    - mkdir build
-    - echo "<h1>My website</h1>" > build/index.html
-  artifacts:
-    paths:
-      - build/
-
-
-test_website:
-  stage: test
+api-tests:
   image: node:22-alpine
+  stage: test
   before_script:
-    - apk add curl
-    - npm install -g serve
+    - npm install -g newman newman-reporter-htmlextra
+    # install newman and html report
   script:
-    - test -f build/index.html
-    - serve build/ &
-    - sleep 3
-    - curl http://localhost:3000 | grep "My website"
+    - newman run collection.json -r htmlextra --reporter-htmlextra-export ./public/index.html
+    # run this collection.json file and then storing the results of the test in this html report
+  pages: true
