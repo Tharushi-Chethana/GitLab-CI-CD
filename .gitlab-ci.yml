@@ -1,19 +1,8 @@
-include:
-  - component: $CI_SERVER_FQDN/components/code-quality/code-quality@1.0.4
-    inputs:
-      stage: build
-
-build_car:
+api_call_job:
   image: alpine
-  stage: build
+  variables:
+    OPENAI_API_KEY: ""
+  before_script:
+    - apk add curl
   script:
-    - echo "My car" > car.txt
-  artifacts:
-    paths:
-      - car.txt
-
-test_car:
-  image: alpine
-  stage: test
-  script:
-    - test -f car.txt
+    - echo "Calling the OpenAI API ..."
