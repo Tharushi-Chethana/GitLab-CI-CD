@@ -1,0 +1,36 @@
+stages:
+  - build
+  - deploy_staging
+  - deploy_prod
+
+build_file:
+  image: alpine
+  stage: build
+  script:
+    - echo "Hello" > build.txt
+  artifacts:
+    paths:
+      - build.txt
+
+mock_deploy_staging:
+  image: alpine
+  stage: deploy_staging
+  environment:
+    name: staging
+  variables:
+    APP_VERSION: $CI_PIPELINE_IID
+    DB_NAME: "staging-db"
+  script:
+    - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
+
+mock_deploy_prod:
+  image: alpine
+  stage: deploy_prod
+  environment:
+    name: production
+  variables:
+    APP_VERSION: $CI_PIPELINE_IID
+    DB_NAME: "prod-db"
+  script:
+    - echo "Deploying app version $APP_VERSION on $CI_ENVIRONMENT_NAME ..."
+    - echo "This should run ONLY on prod."
