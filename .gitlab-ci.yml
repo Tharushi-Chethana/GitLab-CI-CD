@@ -5,7 +5,10 @@ stages:
 
 include: 
 - local: 'ci/build.yml'
-- remote: 'https://gitlab.com/tharushi-projects/gitlab-templated/-/raw/main/.deploy_template.yml'
+#- remote: 'https://gitlab.com/tharushi-projects/gitlab-templated/-/raw/main/.deploy_template.yml'
+- projects: 'tharushi-projects/gitlab-templated'
+  file:
+    - .deploy_template.yml
 
 mock_deploy_staging_new:
   extends: 
