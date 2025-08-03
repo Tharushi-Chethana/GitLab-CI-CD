@@ -1,8 +1,14 @@
-# Learn GitLab CI/CD
+# GitLab-CI-CD
 
-> **Note:** 
+> **Note:**
 > - I primarily code and commit using **GitLab**, and this GitHub repo is a **mirror** for sharing purposes.  
 > - The repository is organized by course sections to reflect my **GitLab CI/CD learning journey** and is not structured like a typical production repo.
+
+---
+
+## 📚 Course Information  
+This repository was created while following the course:  
+**"GitLab CI/CD: Pipelines, CI/CD and DevOps for Beginners"**  
 
 ---
 
@@ -15,18 +21,17 @@
 
 ## 🎯 Purpose  
 This repository is purely for **learning and demonstration** purposes.  
-For examples of production-style repositories and proper version control workflows, please see my other projects:  
-- [Project A (Sample)](https://github.com/your-username/project-a)  
-- [Project B (Sample)](https://github.com/your-username/project-b)  
 
 ---
 
 ## 🛠 Skills Demonstrated  
-- GitLab CI/CD Pipelines  
-- Docker Integration  
-- AWS Deployment (S3 & Elastic Beanstalk)  
-- Test Automation  
-- Anchors, Aliases, and Retry Logic in CI/CD  
+This course gave me hands-on experience in:  
+✅ Building CI/CD pipelines from scratch using GitLab CI  
+✅ Understanding Continuous Integration, Continuous Delivery, and Deployment  
+✅ Automating builds, tests, and deployments  
+✅ Using Docker images within GitLab  
+✅ Deploying applications to AWS (S3 & Elastic Beanstalk)  
+✅ Following industry best practices in pipeline creation  
 
 ---
 
@@ -37,5 +42,5 @@ For examples of production-style repositories and proper version control workflo
 ---
 
 > **Note to reviewers/recruiters:**  
-> This repository is intentionally structured by course sections to document my learning process.  
-> For production-ready repositories, please refer to my other projects listed above.
+> - This repository is intentionally structured by course sections to document my learning process.  
+> - For production-ready repositories, please refer to my other projects linked above.
