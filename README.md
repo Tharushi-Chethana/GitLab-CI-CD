@@ -1,7 +1,8 @@
 # Learn GitLab CI/CD
 
-> **Note:** I primarily code and commit using **GitLab**, and this GitHub repo is a **mirror** for sharing purposes.  
-> The repository is organized by course sections to reflect my **GitLab CI/CD learning journey** and is not structured like a typical production repo.
+> **Note:** 
+- I primarily code and commit using **GitLab**, and this GitHub repo is a **mirror** for sharing purposes.  
+- The repository is organized by course sections to reflect my **GitLab CI/CD learning journey** and is not structured like a typical production repo.
 
 ---
 
